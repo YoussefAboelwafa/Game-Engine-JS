@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.4.0/css/all.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <script src="tic-tac-toe.js"></script>
     <title>Tic-Tac-Toe</title>
     <style>
         body {
@@ -34,24 +33,26 @@
                 Home</button></a>
     </div>
     <div class="head-title">
-        <h1>Tic-<span style="color:black">Tac</span>-Toe <i class="fa fa-x"></i> <i class="fa-regular fa-circle"></i></i> </h1>
+        <h1>Tic-<span style="color:black">Tac</span>-Toe <span id="xo">XO</span> </h1>
     </div>
     <div class="grid">
-        <div class="cell" id="1"></div>
-        <div class="cell" id="2"></div>
-        <div class="cell" id="3"></div>
-        <div class="cell" id="4"></div>
-        <div class="cell" id="5"></div>
-        <div class="cell" id="6"></div>
-        <div class="cell" id="7"></div>
-        <div class="cell" id="8"></div>
-        <div class="cell" id="9"></div>
+        <div class="cell" CellIndex="0" id="0"></div>
+        <div class="cell" cellIndex="1" id="1"></div>
+        <div class="cell" CellIndex="2" id="2"></div>
+        <div class="cell" CellIndex="3" id="3"></div>
+        <div class="cell" CellIndex="4" id="4"></div>
+        <div class="cell" CellIndex="5" id="5"></div>
+        <div class="cell" CellIndex="6" id="6"></div>
+        <div class="cell" CellIndex="7" id="7"></div>
+        <div class="cell" CellIndex="8" id="8"></div>
     </div>
+    <h2 id="status-text"></h2>
     <div class="options text-center">
-        <button class="btn btn-dark" id="reset-btn">Reset game <i class="fa-solid fa-rotate-right"></i></button>
+        <button class="btn btn-dark" id="restart-btn">Restart game <i class="fa-solid fa-rotate-right"></i></button>
         <button class="btn btn-dark" id="start-btn">Start <i class="fa-solid fa-play"></i></button>
 
     </div>
+    <script src="tic-tac-toe.js"></script>
 </body>
 
 </html>

@@ -10,6 +10,12 @@ body h1 {
   color: azure;
   margin-bottom: 20px;
 }
+body h2{
+  text-align: center;
+  margin: 20px;
+  font-size: 50px;
+  color: azure;
+}
 .head-title i {
   color: black;
   font-weight: 500;
@@ -18,7 +24,7 @@ body h1 {
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  gap: 3px;
   margin: 0 auto;
   max-width: 300px;
 }
@@ -30,11 +36,12 @@ body h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 36px;
+  font-size: 80px;
   font-weight: bold;
   text-align: center;
   background-color: rgb(201, 220, 255);
   cursor: pointer;
+  color: black;
 }
 
 .cell:hover {
@@ -60,4 +67,9 @@ body h1 {
 body a{
   text-decoration: none;
   color: inherit;
+}
+#xo{
+  font-family: "Permanent Marker",cursive;
+  font-size: 90px;
+  color: black;
 }
