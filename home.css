@@ -1,38 +1,37 @@
 * {
-    font-family: "Signika Negative", sans-serif;
-    font-size: 24px;
-  }
-  h1 {
-    font-family: "Signika Negative", sans-serif;
-    font-weight: bolder;
-    font-size: 80px;
-    text-align: center;
-    margin-top: 20px;
-    color:azure;
-    margin-bottom: 20px;
-  }
-  h3{
-    color:azure;
-  }
-  .fa-gamepad{
-    font-size: 80px;
-  }
-  a{
-    text-decoration: none;
-    border-radius: 20px;
-    font-size: 24px;
-     
-    padding-bottom: 10px;
-  }
-.container li{
-    margin: 10px;
-    width: 40%;
-    height: 70px;
-    padding-top: 10px;
-   
+  font-family: "Signika Negative", sans-serif;
+  font-size: 24px;
 }
-ul{
-    text-align: center;
-    justify-content: center;
-    align-items: center;
+h1 {
+  font-family: "Signika Negative", sans-serif;
+  font-weight: bolder;
+  font-size: 80px;
+  text-align: center;
+  margin-top: 20px;
+  color: azure;
+  margin-bottom: 20px;
+}
+h3 {
+  color: azure;
+}
+.fa-gamepad {
+  font-size: 80px;
+}
+a {
+  text-decoration: none;
+  border-radius: 20px;
+  font-size: 24px;
+
+  padding-bottom: 10px;
+}
+.container li {
+  margin: 10px;
+  width: 40%;
+  height: 70px;
+  padding-top: 10px;
+}
+ul {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 }

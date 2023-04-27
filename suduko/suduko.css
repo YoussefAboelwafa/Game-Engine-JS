@@ -19,7 +19,7 @@ body h1 {
   width: 360px;
   height: 360px;
 }
-body .labels{
+body .labels {
   display: flex;
 }
 .cell {
@@ -31,8 +31,9 @@ body .labels{
   font-size: 25px;
   font-weight: bolder;
 }
-.grid2 div:hover{
+.grid2 div:hover {
   background-color: rgb(162, 179, 255);
+  cursor: pointer;
 }
 .grid2 {
   display: grid;
@@ -76,12 +77,12 @@ body .labels{
   color: azure;
 }
 #start-btn {
-font-size: 30px;
+  font-size: 30px;
 }
 .options {
   margin-top: 70px;
 }
-.fa-play{
+.fa-play {
   margin-left: 10px;
   color: greenyellow;
 }

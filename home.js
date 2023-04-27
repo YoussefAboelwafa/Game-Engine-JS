@@ -1,11 +1,5 @@
 class Game {
-    constructor(){
-
-    }
-    drawer(){
-
-    }
-    controller(input){
-
-    }
+  constructor() {}
+  drawer() {}
+  controller(input) {}
 }

@@ -10,7 +10,7 @@ body h1 {
   color: azure;
   margin-bottom: 20px;
 }
-body h2{
+body h2 {
   text-align: center;
   margin: 20px;
   font-size: 50px;
@@ -61,14 +61,14 @@ body h2{
 #start-btn {
   margin-left: 50px;
 }
-.fa-play{
+.fa-play {
   color: greenyellow;
 }
-body a{
+body a {
   text-decoration: none;
   color: inherit;
 }
-#xo{
+#xo {
   font-size: 90px;
   color: black;
 }

@@ -12,7 +12,7 @@ class Suduko {
       ["9", "3", "4", "1", "7", "6", "8", "5", "2"],
       ["6", "7", "5", "8", "3", "2", "9", "4", "1"],
       ["8", "1", "2", "9", "4", "5", "7", "6", "3"],
-    ]
+    ];
 
     this.board = [
       ["-", "-", "7", "4", "9", "1", "6", "-", "5"],
@@ -49,34 +49,36 @@ class Suduko {
       }
     }
   }
-  controller(cellID,value) {
+  controller(inputArray) {
+    let cellID = inputArray[0];
+    let value = inputArray[1];
     var row;
     var col;
-    for(let i = 0;i<9;i++){
-      for(let j= 0;j<9;j++){
-        if(cellID == this.id[i][j]){
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        if (cellID == this.id[i][j]) {
           row = i;
           col = j;
           break;
         }
       }
     }
-    //update board
+    //update board with new value
     this.board[row][col] = value;
     let cell = document.getElementById(cellID);
-    if(this.board[row][col] != this.solution[row][col]){
-      cell.style.backgroundColor="red";
-    }
-    else {
-      cell.style.backgroundColor= "white";
+
+    //check if the value is corret
+    if (this.board[row][col] != this.solution[row][col]) {
+      cell.style.backgroundColor = "red";
+    } else {
+      cell.style.backgroundColor = "white";
     }
     this.drawer();
   }
   checkInput(input) {
     if (input > 0 && input < 10) {
       return true;
-    }
-    else return false;
+    } else return false;
   }
   initializeGame() {
     this.cells.forEach((cell) => {
@@ -85,12 +87,11 @@ class Suduko {
         var isValid = this.checkInput(input);
         if (!isValid) {
           alert("INVALID INPUT, Enter a number (1-9)");
-        }
-        else {
+          input = prompt("Enter a number (1-9):");
+        } else {
           cell.textContent = input;
-          this.controller(cell.id,input);
-          console.log(cell.id);
-          console.log(input);
+          let inputArray = [cell.id, input];
+          this.controller(inputArray);
         }
       });
     });
