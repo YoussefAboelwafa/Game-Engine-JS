@@ -21,7 +21,7 @@ class suduko {
         ['63', '64', '65', '66', '67', '68', '69', '70', '71'],
         ['72', '73', '74', '75', '76', '77', '78', '79', '80']];
     }
-    Drawer() {
+    drawer() {
         for (let i = 0; i < 9; i++) {
             for (let j = 0; j < 9; j++) {
                 console.log(i);
@@ -32,12 +32,12 @@ class suduko {
             }
         }
     }
-    Controller() {
+    controller() {
 
     }
     takeInput() {
-        this.Drawer();
+        this.drawer();
     }
 }
-let sud = new suduko();
-sud.Drawer();
+let suduko = new suduko();
+suduko.drawer();
