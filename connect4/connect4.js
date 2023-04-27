@@ -21,11 +21,11 @@ class Connect4 {
     this.counter = 0;
 
 
-    }
- drawer(){
- for(let i=0;i<6;i++)
- { for(let j=0;j<7;j++){
-  const myElement = document.getElementById(this.id[i][j]);
+  }
+  drawer() {
+    for (let i = 0; i < 6; i++) {
+      for (let j = 0; j < 7; j++) {
+        const myElement = document.getElementById(this.id[i][j]);
         myElement.style.backgroundColor = this.board[i][j];
       }
     }
