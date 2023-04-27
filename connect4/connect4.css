@@ -1,0 +1,50 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(7, 110px);
+    grid-template-rows: repeat(6, 110px);
+    background-color: black;
+    margin: 0 auto;
+    justify-content: center;
+    margin-top: 100px;
+    width: 780px;
+    height: 770px;
+}
+
+.grid-item {
+    border: 5px solid black;
+    border-radius: 50%;
+    outline: 5px solid black;
+}
+
+.grid-item:hover {
+    background-color: rgba(75, 204, 255);
+}
+
+.input {
+    width: 150px;
+    height: 50px;
+    margin-top: 30px;
+    margin-left: 850px;
+    font-size: 30px;
+    border-radius: 15px;
+    border-width: 3px;
+    border-color: blueviolet;
+    color: red;
+}
+
+.box {
+    height: 50px;
+    margin-bottom: 100px;
+    background-color: rgb(0, 255, 170);
+    font-size: larger;
+    border-radius: 15px;
+    border-width: 3px;
+    border-color: black;
+}
+
+label {
+    font-size: 30px;
+    color: violet;
+    margin-top: 70px;
+    margin-left: 50px;
+}
