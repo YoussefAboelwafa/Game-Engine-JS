@@ -117,4 +117,3 @@ class TicTacToe extends Game {
 }
 
 let tictactoe = new TicTacToe();
-tictactoe.drawer();
