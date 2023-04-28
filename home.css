@@ -21,14 +21,23 @@ a {
   text-decoration: none;
   border-radius: 20px;
   font-size: 24px;
-
+  margin-bottom: 20px;
   padding-bottom: 10px;
+ 
+}
+li{
+  height: 50px;
+}
+li:hover{
+  transform: scale(1.1);
 }
 .container li {
   margin: 10px;
   width: 40%;
-  height: 70px;
+  height: 80px;
   padding-top: 10px;
+  margin-bottom: 20px;
+  font-size: 30px;
 }
 ul {
   text-align: center;
