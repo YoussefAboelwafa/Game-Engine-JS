@@ -45,6 +45,8 @@ class Suduko {
         const elem = document.getElementById(this.id[i][j]);
         if (this.board[i][j] != "-") {
           elem.textContent = this.board[i][j];
+        } else {
+          elem.style.backgroundColor = "yellow";
         }
       }
     }
@@ -71,33 +73,53 @@ class Suduko {
     if (this.board[row][col] != this.solution[row][col]) {
       cell.style.backgroundColor = "red";
     } else {
-      cell.style.backgroundColor = "white";
+      cell.style.backgroundColor = "yellow";
     }
     this.drawer();
   }
   checkInput(input) {
-    if (input > 0 && input < 10) {
+    if (input >= 0 && input < 10) {
       return true;
     } else return false;
   }
   initializeGame() {
     this.cells.forEach((cell) => {
       cell.addEventListener("click", () => {
-        const input = prompt("Enter a number (1-9):");
+        const input = prompt("Enter a number (1-9) or (0) to clear cell:");
         var isValid = this.checkInput(input);
         if (!isValid) {
-          alert("INVALID INPUT, Enter a number (1-9)");
-          input = prompt("Enter a number (1-9):");
+          alert("INVALID INPUT, Enter a number (1-9) or (0) to clear cell");
+          input = prompt("Enter a number (1-9) or (0) to clear cell:");
         } else {
+          if (input == 0) {
+            cell.textContent = "";
+            cell.style.backgroundColor = "yellow";
+            let inputArray = [cell.id, "-"];
+          }
+          else {
           cell.textContent = input;
           let inputArray = [cell.id, input];
           this.controller(inputArray);
+          }
         }
       });
     });
     let parentElement = this.startBtn.parentNode;
     parentElement.removeChild(this.startBtn);
     this.drawer();
+  }
+  resetGame(){
+    this.board = [
+      ["-", "-", "7", "4", "9", "1", "6", "-", "5"],
+      ["2", "-", "-", "-", "6", "-", "3", "-", "9"],
+      ["-", "-", "-", "-", "-", "7", "-", "1", "-"],
+      ["-", "5", "8", "6", "-", "-", "-", "-", "4"],
+      ["-", "-", "3", "-", "-", "-", "-", "9", "-"],
+      ["-", "-", "6", "2", "-", "-", "1", "8", "7"],
+      ["9", "-", "4", "-", "7", "-", "-", "-", "2"],
+      ["6", "7", "-", "8", "3", "-", "-", "-", "-"],
+      ["8", "1", "-", "-", "4", "5", "-", "-", "-"],
+    ]
   }
 }
 let suduko = new Suduko();
