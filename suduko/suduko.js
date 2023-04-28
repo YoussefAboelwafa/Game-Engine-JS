@@ -70,7 +70,11 @@ class Suduko {
     let cell = document.getElementById(cellID);
 
     //check if the value is corret
-    if (this.board[row][col] != this.solution[row][col]) {
+    if (
+      this.board[row][col] != this.solution[row][col] &&
+      input >= 0 &&
+      input < 10
+    ) {
       cell.style.backgroundColor = "red";
     } else {
       cell.style.backgroundColor = "yellow";
@@ -95,11 +99,10 @@ class Suduko {
             cell.textContent = "";
             cell.style.backgroundColor = "yellow";
             let inputArray = [cell.id, "-"];
-          }
-          else {
-          cell.textContent = input;
-          let inputArray = [cell.id, input];
-          this.controller(inputArray);
+          } else {
+            cell.textContent = input;
+            let inputArray = [cell.id, input];
+            this.controller(inputArray);
           }
         }
       });
@@ -108,7 +111,7 @@ class Suduko {
     parentElement.removeChild(this.startBtn);
     this.drawer();
   }
-  resetGame(){
+  resetGame() {
     this.board = [
       ["-", "-", "7", "4", "9", "1", "6", "-", "5"],
       ["2", "-", "-", "-", "6", "-", "3", "-", "9"],
@@ -119,7 +122,7 @@ class Suduko {
       ["9", "-", "4", "-", "7", "-", "-", "-", "2"],
       ["6", "7", "-", "8", "3", "-", "-", "-", "-"],
       ["8", "1", "-", "-", "4", "5", "-", "-", "-"],
-    ]
+    ];
   }
 }
 let suduko = new Suduko();
