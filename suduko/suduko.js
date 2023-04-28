@@ -25,6 +25,17 @@ class Suduko {
       ["6", "7", "-", "8", "3", "-", "-", "-", "-"],
       ["8", "1", "-", "-", "4", "5", "-", "-", "-"],
     ];
+    this.initialBoard = [
+      ["-", "-", "7", "4", "9", "1", "6", "-", "5"],
+      ["2", "-", "-", "-", "6", "-", "3", "-", "9"],
+      ["-", "-", "-", "-", "-", "7", "-", "1", "-"],
+      ["-", "5", "8", "6", "-", "-", "-", "-", "4"],
+      ["-", "-", "3", "-", "-", "-", "-", "9", "-"],
+      ["-", "-", "6", "2", "-", "-", "1", "8", "7"],
+      ["9", "-", "4", "-", "7", "-", "-", "-", "2"],
+      ["6", "7", "-", "8", "3", "-", "-", "-", "-"],
+      ["8", "1", "-", "-", "4", "5", "-", "-", "-"],
+    ];
     this.id = [
       ["0", "1", "2", "3", "4", "5", "6", "7", "8"],
       ["9", "10", "11", "12", "13", "14", "15", "16", "17"],
@@ -66,17 +77,24 @@ class Suduko {
       }
     }
     //update board with new value
+    if(value == 0){
+      this.board[row][col] = "-";
+    }
+    else {
     this.board[row][col] = value;
+    }
     let cell = document.getElementById(cellID);
 
     //check if the value is corret
     if (
       this.board[row][col] != this.solution[row][col] &&
-      input >= 0 &&
-      input < 10
+      this.initialBoard[row][col] == "-"
     ) {
       cell.style.backgroundColor = "red";
-    } else {
+    } else if (
+      this.board[row][col] == this.solution[row][col] &&
+      this.initialBoard[row][col] == "-"
+    ) {
       cell.style.backgroundColor = "yellow";
     }
     this.drawer();
@@ -90,19 +108,36 @@ class Suduko {
     this.cells.forEach((cell) => {
       cell.addEventListener("click", () => {
         const input = prompt("Enter a number (1-9) or (0) to clear cell:");
+        let inputArray;
         var isValid = this.checkInput(input);
         if (!isValid) {
           alert("INVALID INPUT, Enter a number (1-9) or (0) to clear cell");
           input = prompt("Enter a number (1-9) or (0) to clear cell:");
         } else {
-          if (input == 0) {
-            cell.textContent = "";
-            cell.style.backgroundColor = "yellow";
-            let inputArray = [cell.id, "-"];
-          } else {
-            cell.textContent = input;
-            let inputArray = [cell.id, input];
-            this.controller(inputArray);
+          var row;
+          var col;
+          for (let i = 0; i < 9; i++) {
+            for (let j = 0; j < 9; j++) {
+              if (cell.id == this.id[i][j]) {
+                row = i;
+                col = j;
+                break;
+              }
+            }
+          }
+          if (this.initialBoard[row][col] == "-") {
+            if (input == 0) {
+              cell.textContent = "";
+              cell.style.backgroundColor = "yellow";
+              inputArray = [cell.id, input];
+              this.controller(inputArray);
+            } else if (input == null) {
+
+            } else {
+              cell.textContent = input;
+              inputArray = [cell.id, input];
+              this.controller(inputArray);
+            }
           }
         }
       });
