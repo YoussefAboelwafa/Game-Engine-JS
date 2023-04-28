@@ -1,13 +1,24 @@
+* {
+  font-family: "Signika Negative", sans-serif;
+}
+body h1 {
+  font-family: "Signika Negative", sans-serif;
+  font-weight: bolder;
+  font-size: 80px;
+  text-align: center;
+  color: azure;
+  margin-bottom: 20px;
+}
 .grid {
     display: grid;
-    grid-template-columns: repeat(8, 70px);
-    grid-template-rows: repeat(9, 70px);
+    grid-template-columns: repeat(9, 60px);
+    grid-template-rows: repeat(9, 60px);
     background-color: white;
     margin: 0 auto;
     justify-content: center;
-    margin-top: 60px;
-    width: 560px;
-    height: 560px;
+    margin-top: 20px;
+    width: 600px;
+    height: 600px;
     border: 2px solid black;
   }
   .cell1 {
@@ -39,12 +50,23 @@
   margin-right: 10px;
   margin-top: 5px;
   }
-  button{
+  #back-btn {
+    margin-left: 20px;
+    margin-top: 20px;
+  }
+  .grid label{
+    text-align: center;
+    justify-content: center;
+    padding: 20px;
+    font-size: 30px;
+    margin: auto;
+  }
+  .options1 {
+    margin-top: 20px;
+    font-size: 30px;
+    color: azure;
+  }
+  .options1 button{
+    width: 100px;
     height: 50px;
-    font-size: larger;
-    margin-left: 100px;
-    width: 100%;
-    border-radius: 10px;
-    border: 1px solid blue;
-    margin-top: 10px;
   }
