@@ -11,7 +11,6 @@
       href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@600&display=swap"
     />
     <link rel="stylesheet" href="home.css" />
-    <link rel="icon" type="image/x-icon" href="/assets/icons/icon.ico" />
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v6.4.0/css/all.css"
@@ -43,25 +42,30 @@
       <h1>Welcome to the Game Engine <i class="fa-solid fa-gamepad"></i></h1>
       <h3>Choose a game to play:</h3>
       <ul class="list-group-item-dark">
-        <a href="/Chess/chess.html">
+        <a onclick="initializeGame('board')">
+          <li class="list-group-item btn btn-dark">board</li>
+        </a>
+        <a onclick="initializeGame('chess')">
           <li class="list-group-item btn btn-dark">Chess</li>
         </a>
-        <a href="./suduko/suduko.html">
+        <a onclick="initializeGame('suduko')">
           <li class="list-group-item btn btn-dark">Suduko</li>
         </a>
-        <a href="./tic-tac-toe/tic-tac-toe.html">
+        <a onclick="initializeGame('tic-tac-toe')">
           <li class="list-group-item btn btn-dark">Tic Tac Toe</li>
         </a>
-        <a href="./connect4/connect4.html">
+        <a onclick="initializeGame('connect4')">
           <li class="list-group-item btn btn-dark">Connect 4</li>
         </a>
-        <a href="game5.html">
+        <a onclick="initializeGame('checkers')">
           <li class="list-group-item btn btn-dark">Checkers</li>
         </a>
-        <a href="./8queens/8queens.html">
+        <a onclick="initializeGame('8queens')">
           <li class="list-group-item btn btn-dark">8 Queens</li>
         </a>
       </ul>
+
     </div>
+    <script src="home.js"></script>
   </body>
 </html>
