@@ -8,7 +8,15 @@ export class Suduko extends GameEngine {
     console.log(input);
     console.log(state);
 
+    let row = Math.floor(input[0] / 9);
+    let col = input[0] % 9;
+
     if (input == null || input[1] == "") {
+      state[2] = false;
+      return state;
+    }
+
+    if (state[1][row][col] != "-") {
       state[2] = false;
       return state;
     }
@@ -18,18 +26,15 @@ export class Suduko extends GameEngine {
       return state;
     }
 
-    let row = Math.floor(input[0] / 9);
-    let col = input[0] % 9;
-    if (input[1] == 0 && state[1][row][col] == "-") {
+    
+
+    if (input[1] == "0" && state[1][row][col] == "-") {
       state[0][row][col] = "-";
       state[2] = true;
       return state;
     }
 
-    if (state[1][row][col] != "-") {
-      state[2] = false;
-      return state;
-    }
+    
 
     let boxRow = Math.floor(row / 3);
     let boxCol = Math.floor(col / 3);
