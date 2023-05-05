@@ -141,11 +141,14 @@
           id="input"
           class="input"
         />
-        <button class="box btn btn-dark" onclick="eightqueen.takeInput()">
+        <button class="box btn btn-dark" id="enterbutton">
           Enter
         </button>
+        <button class="box btn btn-dark" onclick="RestartGame('8queens')">
+          Restart
+        </button>
       </div>
-    
-      <!-- <script type="module" src="../GameFactory.js"></script> -->
+      <script src="../home.js"></script>
+      <script type="module" src="../GameFactory.js"></script>
     </body>
 </html>

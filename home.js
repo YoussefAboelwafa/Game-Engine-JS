@@ -20,6 +20,9 @@ function initializeGame(name){
     case "chess":
         window.location.href= "./Chess/chess.html";
         break;
+    case "checkers":
+        window.location.href= "./checkers/checkers.html";
+        break;
 }   
 
 }
@@ -45,6 +48,9 @@ function RestartGame(name){
         break;
     case "chess":
         window.location.href= "./chess.html";
+        break;
+    case "checkers":
+        window.location.href= "./checkers.html";
         break;
 }   
 

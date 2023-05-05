@@ -149,11 +149,19 @@
         <div class="cell" id="80"></div>
       </div>
     </div>
-    <div class="options text-center">
-      <button class="btn btn-dark" id="start-btn">
-        Start <i class="fa-solid fa-play"></i>
+
+    <div class="options1 text-center" id="box2">
+      <label for="input">  Enter a number (from 1-9 or 0 to clear cell) then select a cell :  </label>
+      <input
+        type="text"
+        id="input"
+        class="input"
+      />
+      <button class="btn btn-dark" onclick="RestartGame('suduko')">
+        Restart game <i class="fa-solid fa-rotate-right"></i>
       </button>
     </div>
-    <!-- <script type="module" src="../GameFactory.js"></script> -->
+    <script src="../home.js"></script>
+    <script type="module" src="../GameFactory.js"></script>
   </body>
 </html>

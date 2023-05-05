@@ -4,6 +4,7 @@ import {EightQueens} from './8queens/8queens.js';
 import {Suduko} from './suduko/suduko.js';
 import {Connect4} from './connect4/connect4.js';
 import {Chess} from './Chess/chess.js';
+import {Checkers} from './checkers/checkers.js';
 
 const gameName=localStorage.getItem("Game");
 localStorage.removeItem("Game")
@@ -27,6 +28,10 @@ switch (gameName) {
     case "chess":
       new Chess();
       break;
+    case "checkers":
+        new Checkers();
+        break;
+    
 
 }   
 

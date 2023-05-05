@@ -100,23 +100,22 @@
       <div class="grid-item" id="40"></div>
       <div class="grid-item" id="41"></div>
     </div>
-    <div class="options1 text-center" id="box2" style="display: none">
+    <div class="options1 text-center" id="box2">
       <label for="input">Enter column number : </label>
       <input
         type="text"
         id="input"
         class="input"
       />
-      <button class="box btn btn-dark" onclick="connect4.takeInput()">
+      <button class="box btn btn-dark" id="enterbutton">
         Enter
       </button>
-    </div>
-    <div class="options2 text-center" id="box1">
-      <button class="btn btn-dark" id="start-btn">
-        Start <i class="fa-solid fa-play"></i>
+      <button class="btn btn-dark" onclick="RestartGame('connect4')">
+        Restart game <i class="fa-solid fa-rotate-right"></i>
       </button>
     </div>
-    <!-- <script type="module" src="../GameFactory.js"></script> -->
+    <script type="module" src="../GameFactory.js"></script>
+    <script src="../home.js"></script>
   </body>
 </html>
 

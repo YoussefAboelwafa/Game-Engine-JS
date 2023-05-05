@@ -1,10 +1,10 @@
 import {GameEngine} from '../GameEngine.js';
 export class TicTacToe extends GameEngine{
-  constructor() {
+constructor() {
     super();
   }
 
-  drawer(state) {    
+drawer(state) {    
     const cells = Array.from(document.querySelectorAll('.cell'));
     let i=0;
     cells.forEach(function(cell){
@@ -14,7 +14,7 @@ export class TicTacToe extends GameEngine{
     document.getElementById("status-text").textContent = `${state[1]}'s Turn`;
   }
   
-  controller(input,state) {
+controller(input,state) {
     if (state[0][input] == "") {
       state[0][input]=state[1];
       state[1] = state[1] == "X" ? "O" : "X";
@@ -34,8 +34,8 @@ initialize(){
 
 async inputreader(){
   const cells = Array.from(document.querySelectorAll('.cell'));
-    const selectedcell = await this.waitForEvent(cells, 'click');
-    console.log(`cell ${selectedcell.id} clicked!`);
+  const selectedcell = await this.waitForEvent(cells, 'click');
+  console.log(`cell ${selectedcell.id} clicked!`);
 return selectedcell.id
 }
 
