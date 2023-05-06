@@ -17,7 +17,7 @@ export class GameEngine {
         };
         loop();
     }
-
+    
     drawer(state){}
     controller(input,state){}
     async inputreader(){}

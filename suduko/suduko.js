@@ -1,6 +1,6 @@
 import {GameEngine} from '../GameEngine.js';
 export class Suduko extends GameEngine{
-  constructor() {
+constructor() {
     super()
   }
 
@@ -73,30 +73,19 @@ drawer(state) {
   }
 
 initialize(){
-  const grid=[
-    ["-", "-", "7", "4", "9", "1", "6", "-", "5"],
-    ["2", "-", "-", "-", "6", "-", "3", "-", "9"],
-    ["-", "-", "-", "-", "-", "7", "-", "1", "-"],
-    ["-", "5", "8", "6", "-", "-", "-", "-", "4"],
-    ["-", "-", "3", "-", "-", "-", "-", "9", "-"],
-    ["-", "-", "6", "2", "-", "-", "1", "8", "7"],
-    ["9", "-", "4", "-", "7", "-", "-", "-", "2"],
-    ["6", "7", "-", "8", "3", "-", "-", "-", "-"],
-    ["8", "1", "-", "-", "4", "5", "-", "-", "-"],
-  ];
-  const initialgrid=[
-    ["-", "-", "7", "4", "9", "1", "6", "-", "5"],
-    ["2", "-", "-", "-", "6", "-", "3", "-", "9"],
-    ["-", "-", "-", "-", "-", "7", "-", "1", "-"],
-    ["-", "5", "8", "6", "-", "-", "-", "-", "4"],
-    ["-", "-", "3", "-", "-", "-", "-", "9", "-"],
-    ["-", "-", "6", "2", "-", "-", "1", "8", "7"],
-    ["9", "-", "4", "-", "7", "-", "-", "-", "2"],
-    ["6", "7", "-", "8", "3", "-", "-", "-", "-"],
-    ["8", "1", "-", "-", "4", "5", "-", "-", "-"],
-  ];
+  const grid = Array.from(Array(9), () => new Array(9).fill("-"));
+  for (let i = 0; i < 9; i++) {
+    for (let j = 0; j < 9; j++) {
+      if (Math.random() < 0.5) {
+        var randomNumber = Math.floor(Math.random() * 9) + 1;
+        if (this.validate_input(grid, i, j, randomNumber)) {
+          grid[i][j] = randomNumber.toString();
+        }
+      }
+    }
+  }
+  const initialgrid=grid;
   const checkmove=true;
-
 return [grid,initialgrid,checkmove];
 
 }
@@ -120,6 +109,34 @@ const promises = elements.map(element => {
   });
   return Promise.race(promises);
 }
+
+
+validate_input(grid, row, col, value) {
+  for (let j = 0; j < 9; j++) {
+    if (grid[row][j] == value) {
+      return false;
+    }
+  }
+  // Check column
+  for (let i = 0; i < 9; i++) {
+    if (grid[i][col] == value) {
+      return false;
+    }
+  }
+  // Check box
+  let boxRow = Math.floor(row / 3) * 3;
+  let boxCol = Math.floor(col / 3) * 3;
+  for (let i = boxRow; i <= boxRow + 2; i++) {
+    for (let j = boxCol; j <= boxCol + 2; j++) {
+      if (grid[i][j] == value) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+
 
 
 

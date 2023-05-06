@@ -29,8 +29,11 @@ constructor()
             ["56","57","58","59","60","61","62","63"]
         ]
     }
-drawer()
+
+
+drawer(state)
     {
+        state[0]
         for(let i=0;i<8;i++)
         {
             for(let j=0;j<8;j++)
