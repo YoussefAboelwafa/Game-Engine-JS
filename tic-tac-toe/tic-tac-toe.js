@@ -36,6 +36,7 @@ async inputreader(){
   const cells = Array.from(document.querySelectorAll('.cell'));
   console.log(cells);
   const selectedcell = await this.waitForEvent(cells, 'click');
+  console.log(selectedcell);
   console.log(`cell ${selectedcell.id} clicked!`);
 return selectedcell.id
 }

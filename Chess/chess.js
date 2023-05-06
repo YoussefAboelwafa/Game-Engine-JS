@@ -11,28 +11,32 @@ export class Chess extends GameEngine{
   controller(input,state){
     console.log(`now from cell ${input[0]} to ${input[1]}`);
   }
+
   
-  async inputreader(){
+
+
+
+
+  
+async inputreader(){
     const cells = Array.from(document.querySelectorAll('.cell'));
-    console.log(cells);
-    const cell1 = await this.waitForEvent(cells, 'click');
-    const cell2 = await this.waitForEvent(cells, 'click');
-    console.log(`cell from ${cell1.id} clicked!`);
-    console.log(`cell to ${cell2.id} clicked!`);
-
-  return [cell1.id,cell2.id];
+    const from = await this.waitForEvent(cells, 'click');
+    const to = await this.waitForEvent(cells, 'click');
+    console.log(`cell from ${from.id} clicked!`);
+    console.log(`cell to ${to.id} clicked!`);
+    return [from.id,to.id];
   }
-  
   waitForEvent(elements, eventName) {
-  const promises = elements.map(element => {
-      return new Promise(resolve => {
-        element.addEventListener(eventName, () => {
-          resolve(element);
-        }, { once: true });
+    const promises = elements.map(element => {
+        return new Promise(resolve => {
+          element.addEventListener(eventName, () => {
+            resolve(element);
+          }, { once: true });
+        });
       });
-    });
+      return Promise.race(promises);
 }
-
+    
 
 
 }
