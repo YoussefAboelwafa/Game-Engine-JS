@@ -29,8 +29,8 @@ switch (gameName) {
       new Chess();
       break;
     case "checkers":
-        new Checkers();
-        break;
+      new Checkers();
+      break;
     
 
 }   

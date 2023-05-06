@@ -1,24 +1,26 @@
 import {GameEngine} from '../GameEngine.js';
+
 export class Checkers extends GameEngine{
     // 🔴->2
     // 🔵->1
-
-constructor()
+    constructor()
     {
-
-        this.turn = 1;
-        this.piece =[0,0];
-        this.canchoose = true;
-        this.istouched = false;
-        this.board=Array(8).fill().map(() => Array(8).fill(0));
-        this.board [0] = [0,2,0,2,0,2,0,2];
-        this.board [1] = [2,0,2,0,2,0,2,0];
-        this.board [2] = [0,2,0,2,0,2,0,2];
-        this.board [5] = [1,0,1,0,1,0,1,0];
-        this.board [6] = [0,1,0,1,0,1,0,1];
-        this.board [7] = [1,0,1,0,1,0,1,0];
-
-        this.id = [
+        super();
+    }
+    
+    initialize(){
+        const turn = 1;
+        const piece =[0,0];
+        const canchoose = true;
+        const istouched = false;
+        const board=Array(8).fill().map(() => Array(8).fill(0));
+        board [0] = [0,2,0,2,0,2,0,2];
+        board [1] = [2,0,2,0,2,0,2,0];
+        board [2] = [0,2,0,2,0,2,0,2];
+        board [5] = [1,0,1,0,1,0,1,0];
+        board [6] = [0,1,0,1,0,1,0,1];
+        board [7] = [1,0,1,0,1,0,1,0];
+        const id = [
             ["0", "1", "2", "3", "4", "5", "6", "7"],
             ["8","9", "10", "11", "12", "13", "14", "15"],
             ["16","17","18", "19", "20", "21", "22", "23"],
@@ -28,64 +30,82 @@ constructor()
             ["48", "49", "50", "51", "52", "53", "54", "55"],
             ["56","57","58","59","60","61","62","63"]
         ]
+        return[board,id,true,turn,piece,canchoose,istouched]
     }
 
-
-drawer(state)
+    async inputreader(){
+        const cells = Array.from(document.querySelectorAll('.cell'));
+        const selectedcell = await this.waitForEvent(cells, 'click');
+        console.log(`cell ${selectedcell.id} clicked!`);
+      return [parseInt(selectedcell.id[0]),parseInt(selectedcell.id[1])];
+      } 
+    waitForEvent(elements, eventName) {
+      const promises = elements.map(element => {
+          return new Promise(resolve => {
+            element.addEventListener(eventName, () => {
+              resolve(element);
+            }, { once: true });
+          });
+        });
+        return Promise.race(promises);
+      }
+      
+    drawer(state)
     {
-        state[0]
         for(let i=0;i<8;i++)
         {
             for(let j=0;j<8;j++)
             {
-                if(this.board[i][j]!=0)
+                if(state[0][i][j]!=0)
                 {
-                    const elem=document.getElementById(this.id[i][j]);
-                    if (this.board[i][j] == 1) {
+                    const elem=document.getElementById(i.toString()+j.toString());
+                    if (state[0][i][j] == 1) {
                         elem.textContent = '🔵';
                     }
-                    else if (this.board[i][j] == 2){
+                    else if (state[0][i][j] == 2){
                         elem.textContent = '🔴'
                     }
-                    else if (this.board[i][j] == 3){
+                    else if (state[0][i][j] == 3){
                         elem.textContent = '🔷'
                     }
-                    else if (this.board[i][j] == 4){
+                    else if (state[0][i][j] == 4){
                         elem.textContent = '🔶'
                     }
                 }
             }
         }
     }
-async Controller(position)
+
+
+    controller(position,state)
     {
-        let c = parseInt(position[0]);
-        let r = parseInt(position[1]);
+
+        console.log(position);
+        // [board,id,true,turn,piece,canchoose,istouched]
+        let c = position[0];
+        let r = position[1];
+        let board = state[0];
+        let id = state[1];
+        let turn = state[3];
+        let piece = state[4];
+        let canchoose = state[5];
+        let istouched = state[6];
 
         async function jump(jump,id,board) {
             let jumps = [];
             console.log(new Array(board));
-            const from = document.getElementById(id[jump[0]][jump[1]]);
-            const to = document.getElementById(id[jump[2]][jump[3]]);
-            const over = document.getElementById( id[ (jump[0] + jump[2])/2 ][ (jump[1] + jump[3])/2]);
             if (board[jump[0]][jump[1]] === 1 && jump[2] !== 0) {
-                to.textContent = '🔵';
                 board[jump[2]][jump[3]] = 1;
             }
             else if (board[jump[0]][jump[1]] === 2 && jump[2] !== 7){
-                to.textContent = '🔴';
                 board[jump[2]][jump[3]] = 2;
             }
             else if (board[jump[0]][jump[1]] === 3 || (board[jump[0]][jump[1]] === 1 && jump[2] === 0)){
-                to.textContent = '🔷';
                 board[jump[2]][jump[3]] = 3;
             }
             else if (board[jump[0]][jump[1]] === 4 || (board[jump[0]][jump[1]] === 2 && jump[2] === 7)){
-                to.textContent = '🔶';
                 board[jump[2]][jump[3]] = 4;
             }
-            from.textContent = '';
-            over.textContent = '';
             board[jump[0]][jump[1]] = 0;
             board[ (jump[0] + jump[2])/2 ][ (jump[1] + jump[3])/2] = 0;
             console.log(new Array(board));
@@ -146,14 +166,16 @@ async Controller(position)
                 div.addEventListener('click',function () {
                     choice(div.id);
                 });
-                if (!document.getElementById(ids[jumps[i][2]][jumps[i][3]]).hasChildNodes()) {
-                    document.getElementById(ids[jumps[i][2]][jumps[i][3]]).appendChild(div);
+                if (!document.getElementById([jumps[i][2]].toString()+[jumps[i][3]].toString()).hasChildNodes()) {
+                    document.getElementById([jumps[i][2]].toString()+[jumps[i][3]].toString()).appendChild(div);
                 }
                 divs.push(div);
             }
             await waitForPress();
             for (let i = 0; i < divs.length; i++) {
-                document.getElementById(divs[i].id).remove();
+                if(document.getElementById(divs[i].id) !== null) {
+                    document.getElementById(divs[i].id).remove();
+                }
             }
             po = parseInt( po.slice(1));
             await jump(jumps[po] ,ids ,board)
@@ -202,106 +224,98 @@ async Controller(position)
             return false;
         }
 
-        if (this.canchoose && this.istouched && this.board[c][r] === 0){
-            this.canchoose = false;
-            if ( this.board[this.piece[0]][this.piece[1]] === 1 ){
-                if(this.piece[0]-1 === c && (this.piece[1]-1 === r || this.piece[1]+1 === r)){
-                    if (this.board[c][r] === 0){
+        if (canchoose && istouched && board[c][r] === 0){
+            canchoose = false;
+            if ( board[piece[0]][piece[1]] === 1 ){
+                if(piece[0]-1 === c && (piece[1]-1 === r || piece[1]+1 === r)){
+                    if (board[c][r] === 0){
                         let p = 1;
                         if (c === 0){
                             p = p + 2;
                         }
-                        const elem1 = document.getElementById(this.id[this.piece[0]][this.piece[1]]);
-                        const elem2 = document.getElementById(this.id[c][r]);
-                        elem1.textContent = '';
-                        if (p === 3){
-                            elem2.textContent = '🔷';
-                        }
-                        else {
-                            elem2.textContent = '🔵';
-                        }
-                        this.board[this.piece[0]][this.piece[1]] = 0;
-                        this.board[c][r] = p ;
-                        this.turn = 2;
-                        console.log(this.canchoose);
+                        board[piece[0]][piece[1]] = 0;
+                        board[c][r] = p ;
+                        turn = 2;
+                        console.log(canchoose);
                     }
-                    else if (this.board[c][r] === 2 || this.board[c][r] === 4){
+                    else if (board[c][r] === 2 || board[c][r] === 4){
 
                     }
                 }
             }
-            else if(this.board[this.piece[0]][this.piece[1]] === 2){
-                if(this.piece[0]+1 === c && (this.piece[1]-1 === r || this.piece[1]+1 === r)){
-                    if (this.board[c][r] === 0){
+            else if(board[piece[0]][piece[1]] === 2){
+                if(piece[0]+1 === c && (piece[1]-1 === r || piece[1]+1 === r)){
+                    if (board[c][r] === 0){
                         let p = 2;
                         if (c === 7){
                             p = p + 2;
                         }
-                        const elem1 = document.getElementById(this.id[this.piece[0]][this.piece[1]]);
-                        const elem2 = document.getElementById(this.id[c][r]);
-                        elem1.textContent = '';
-                        if (p === 4){
-                            elem2.textContent = '🔶';
-                        }
-                        else {
-                            elem2.textContent = '🔴';
-                        }
-                        this.board[this.piece[0]][this.piece[1]] = 0;
-                        this.board[c][r] = p ;
-                        this.turn = 1;
+                        board[piece[0]][piece[1]] = 0;
+                        board[c][r] = p ;
+                        turn = 1;
                         console.log(this.canchoose);
                     }
 
                 }
             }
-            else if(this.board[this.piece[0]][this.piece[1]] === 3 || this.board[this.piece[0]][this.piece[1]] === 4){
-                if ((this.piece[0]+1 === c || this.piece[0]-1 === c )&& (this.piece[1]-1 === r || this.piece[1]+1 === r)){
-                    if (this.board[c][r] === 0){
-                        let p = this.board[this.piece[0]][this.piece[1]] ;
-                        const elem1 = document.getElementById(this.id[this.piece[0]][this.piece[1]]);
-                        const elem2 = document.getElementById(this.id[c][r]);
-                        elem1.textContent = '';
-                        if (p === 4){
-                            elem2.textContent = '🔶';
-                            this.turn = 1;
-                        }
-                        else {
-                            elem2.textContent = '🔷';
-                            this.turn = 2;
-                        }
-                        this.board[this.piece[0]][this.piece[1]] = 0;
-                        this.board[c][r] = p ;
+            else if(board[piece[0]][piece[1]] === 3 || board[piece[0]][piece[1]] === 4){
+                if ((piece[0]+1 === c || piece[0]-1 === c )&& (piece[1]-1 === r || piece[1]+1 === r)){
+                    if (board[c][r] === 0){
+                        let p = board[piece[0]][piece[1]] ;
+                        board[piece[0]][piece[1]] = 0;
+                        board[c][r] = p ;
                         console.log(this.canchoose);
                     }
                 }
             }
             console.log("col:" + c + " row:" + r);
-            this.istouched = false;
-            this.canchoose = true;
+            istouched = false;
+            canchoose = true;
+            state[2] = true;
+            state[3] = turn ;
+            state[4] = piece;
+            state[5] = canchoose;
+            state[6] = istouched;
+
         }
-        else if (this.canchoose && this.board[c][r] !== 0){
-            if(! await check(this.board,this.id,this.turn)) {
-                this.piece[0] = c;
-                this.piece[1] = r;
-                if (this.turn == 1 && this.board[c][r] % 2 === 1) {
-                    this.istouched = true;
+        else if (canchoose && board[c][r] !== 0){
+            if(! check(board,id,turn)) {
+                piece[0] = c;
+                piece[1] = r;
+                if (turn == 1 && board[c][r] % 2 === 1) {
+                    istouched = true;
                     console.log("blue");
-                } else if (this.turn == 2 && this.board[c][r] % 2 === 0) {
-                    this.istouched = true;
+                } else if (turn == 2 && board[c][r] % 2 === 0) {
+                    istouched = true;
                     console.log("red");
                 }
             }
             else{
-                if (this.turn === 1){
-                    this.turn = 2;
+                if (turn === 1){
+                    turn = 2;
                 }
                 else {
-                    this.turn = 1;
+                    turn = 1;
                 }
 
             }
+            state[2] = true;
+            state[3] = turn ;
+            state[4] = piece;
+            state[5] = canchoose;
+            state[6] = istouched;
         }
-    }
+        else {
+            state[2] = false;
+            state[3] = turn ;
+            state[4] = piece;
+            state[5] = canchoose;
+            state[6] = istouched;
+        }
+        console.log("state is");
+        console.log(state);
+        return state;
 
+    }
 
 }

@@ -4,9 +4,25 @@ export class Chess extends GameEngine{
     super();
   }
   
-  initialize(){}
+  initialize(){
+    const grid=[
+      ["brook", "bknight", "bbishop", "bqueen", "bking", "bbishop", "bknight","brook"],
+      ["bpawn","bpawn","bpawn","bpawn","bpawn","bpawn","bpawn","bpawn"],
+      ["", "", "", "", "", "", "", ""],
+      ["", "", "", "", "", "", "", ""],
+      ["", "", "", "", "", "", "", ""],
+      ["", "", "", "", "", "", "", ""],
+      ["wpawn","wpawn","wpawn","wpawn","wpawn","wpawn","wpawn","wpawn"],
+      ["wrook", "wknight", "wbishop", "wqueen", "wking", "wbishop", "wknight","wrook"],
+    ];
+  const currentPlayer=true;
+  const currentmove=true;
+  return [grid,currentPlayer,currentmove];
+  }
 
-  drawer(state){}
+  drawer(state){
+
+  }
 
   controller(input,state){
     console.log(`now from cell ${input[0]} to ${input[1]}`);
@@ -17,7 +33,7 @@ export class Chess extends GameEngine{
 
 
 
-  
+
 async inputreader(){
     const cells = Array.from(document.querySelectorAll('.cell'));
     const from = await this.waitForEvent(cells, 'click');
