@@ -7,8 +7,6 @@ constructor() {
  
 controller(input,state){
   console.log(input);
-  console.log(state);
-
   if(input==null || input[1]==""){
     state[2]=false;
     return state;
@@ -84,7 +82,7 @@ initialize(){
       }
     }
   }
-  const initialgrid=grid;
+  const initialgrid=JSON.parse(JSON.stringify(grid));
   const checkmove=true;
 return [grid,initialgrid,checkmove];
 

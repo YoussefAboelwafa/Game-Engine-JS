@@ -1,4 +1,3 @@
-import {Board} from './board.js';
 import {TicTacToe} from './tic-tac-toe/tic-tac-toe.js';
 import {EightQueens} from './8queens/8queens.js';
 import {Suduko} from './suduko/suduko.js';
@@ -12,9 +11,6 @@ localStorage.removeItem("Game")
 switch (gameName) {
     case "tic-tac-toe":
       new TicTacToe();
-      break;
-    case "board":
-      new Board();
       break;
     case "suduko":
       new Suduko();

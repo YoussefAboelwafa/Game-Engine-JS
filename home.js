@@ -5,9 +5,6 @@ function initializeGame(name){
     case "tic-tac-toe":
         window.location.href= "./tic-tac-toe/tic-tac-toe.html";
         break;
-    case "board":
-        window.location.href= "./Board.html";
-        break;
     case "suduko":
         window.location.href= "./suduko/suduko.html";
         break;
@@ -33,9 +30,6 @@ function RestartGame(name){
     switch (name) {
     case "tic-tac-toe":
         window.location.href= "./tic-tac-toe.html";
-        break;
-    case "board":
-        window.location.href= "./Board.html";
         break;
     case "suduko":
         window.location.href= "./suduko.html";

@@ -37,28 +37,27 @@ body h2{
     border: solid black 5px;
     padding: 0px 30px 0px 30px;
     justify-content: center;
-
-
-
 }
 
 .divv {
     display: flex;
 }
 
-li {
-    list-style: none;
-    display: grid;
-    place-items: center;
-    font-size: 0px;
-}
 
 #back-btn {
     margin-left: 20px;
     margin-top: 20px;
 }
-
-
+.allimg {
+    width: 45px;
+    position: relative;
+    bottom: 5px;
+  }
+  
+.allpawn {
+    transform: scale(0.7);
+  }
+  
 
 .labels{
 padding-left:31px;
@@ -73,7 +72,6 @@ padding-left:31px;
 
 
 }
-
 .divv label{
     margin-top: 10px;
     font-size: 30px;
@@ -85,11 +83,16 @@ padding-left:31px;
     text-align:center;
 
 }
+
 .c1{
     margin: 0.5px;
     width: 60px;
     height: 60px;
     background-color: rgb(240, 201, 150);
+    list-style: none;
+    display: grid;
+    place-items: center;
+    font-size: 0px;
 
 }
 .c2{
@@ -97,50 +100,22 @@ padding-left:31px;
     width: 60px;
     height: 60px;
     background-color:rgb(140,50,10);
+    list-style: none;
+    display: grid;
+    place-items: center;
+    font-size: 0px;
 
 }
 .cell:hover {
     background-color: #949494;
     cursor: pointer;
 }
+#restart-btn{
+height:60px;
+font-size: 25px;
+margin-top: 5px;
+border-radius: 15px;
+
+}
 
 
-/* input {
-    width: 150px;
-    height: 50px;
-    font-size: 50px;
-    margin-right: 20px;
-    border-radius: 15px;
-    border: 3px solid black;
-    border-color: black;
-    margin-right: 10px;
-    margin-top: 5px;
-  }
-.options1 label {
-    text-align: center;
-    justify-content: center;
-    padding: 10px;
-    font-size: 20px;
-    font-weight: bold;
-    color: azure;
-    margin: auto;
-  } */
-
-
-
-/* @media (max-width:650px){
-
-    #tog {
-        margin-bottom: 70px;
-
-    }
-
-    .box {
-        width: 11vw;
-        height: 11vw;
-    }
-
-    .allimg {
-        width: 7vw;
-    }
-} */

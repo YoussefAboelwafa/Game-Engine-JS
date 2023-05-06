@@ -10,7 +10,7 @@ export class GameEngine {
                     this.drawer(state);
                 }
                 else{
-                    alert("Choose a valid input!");
+                    alert("Incorrect Move!");
                 }
                 loop();
             });
