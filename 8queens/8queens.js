@@ -2,14 +2,13 @@ import {GameEngine} from '../GameEngine.js';
 export class EightQueens extends GameEngine{
 constructor()
 {  super()
-    }
+}
 
 initialize(){
     const grid=Array(9).fill().map(() => Array(9).fill(0));
     const currentmove=true;
     return [grid,true,currentmove]
 }
-
 drawer(state){
     for(let i=0;i<8;i++){
         for(let j=0;j<8;j++){
@@ -23,20 +22,26 @@ drawer(state){
      }
     }
 }
-
 controller(input,state){
-const inputArray=input.split(" ");
-if(inputArray.length==0||inputArray.length==1){
+const inputArray=input.split("-");
+if(inputArray.length!=2 && inputArray.length!=3){
     state[2]=false;
     return state;
 }
-
+if(inputArray[0]==""||inputArray[1]==""){
+    state[2]=false;
+    return state;
+}
 let row=parseInt(inputArray[0]);
-let col=parseInt(inputArray[1]);    
+let col=parseInt(inputArray[1]);
+
 if(inputArray.length==3){
     if(inputArray[2]=="0"){
         state[0][row][col]=0;
         state[2]=true;
+        return state;
+    }else if(inputArray[2]==""){
+        state[2]=false;
         return state;
     }
 }
@@ -112,34 +117,6 @@ return state;
 
 
 }
-
-async inputreader(){
-    await this.waitForButton('enterbutton');
-    const input = document.getElementById("input").value;
-    document.getElementById("input").value = "";
-    return input; 
-  
-}
-
-waitForButton(buttonId) {
-      return new Promise(resolve => {
-        const button = document.getElementById(buttonId);
-        const listener = () => {
-          button.removeEventListener('click', listener);
-          resolve();
-        };
-        button.addEventListener('click', listener);
-      });
-}
-
-
-
-
-
-
-
-
-
 
 
 }

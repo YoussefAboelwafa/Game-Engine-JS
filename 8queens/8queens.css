@@ -54,6 +54,8 @@ input {
   margin-left: 20px;
   margin-top: 20px;
 }
+
+
 .grid label {
   text-align: center;
   justify-content: center;
@@ -66,7 +68,10 @@ input {
   font-size: 30px;
   color: azure;
 }
-.options1 button {
-  width: 100px;
-  height: 50px;
+.options1 button{
+  width: 180px;
+  height:60px;
+  border-radius: 10px;
+  font-size: 20px;
+  
 }

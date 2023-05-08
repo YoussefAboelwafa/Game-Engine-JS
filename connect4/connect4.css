@@ -74,3 +74,13 @@ body h1 {
 .options2 {
   margin-top: 20px;
 }
+
+.options1 button{
+  width: 180px;
+  height:60px;
+  border-radius: 10px;
+  font-size: 20px;
+  
+}
+
+

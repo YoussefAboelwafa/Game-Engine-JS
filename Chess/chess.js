@@ -3,7 +3,7 @@ export class Chess extends GameEngine{
 constructor() {
     super();
 }
-  
+
 initialize(){
   const grid=[
     ["Brook", "Bknight", "Bbishop", "Bqueen", "Bking", "Bbishop", "Bknight","Brook"],
@@ -20,8 +20,86 @@ const currentmove=true;
 return [grid,currentPlayer,currentmove];
 }
 controller(input,state){
-let [r1,c1]=[Math.floor(input[0]/8),input[0]%8];   //cell 'from' row and column
-let [r2,c2]=[Math.floor(input[1]/8),input[1]%8];   // cell 'to'  row and column
+  const inputArray=input.split("-");
+  if(inputArray.length!=2 || inputArray[0]=="" || inputArray[1]=="" || inputArray[0].length!=2 || inputArray[1].length!=2){
+      state[2]=false;
+      return state;
+  }
+
+let [r1,c1]= [inputArray[0][0],inputArray[0][1]]
+let [r2,c2]= [inputArray[1][0],inputArray[1][1]]
+
+if(r1<1 || r1>8 ||r2<0 || r2>8){
+  state[2]=false;
+  return state;
+}
+r1=8-parseInt(inputArray[0][0]);
+r2=8-parseInt(inputArray[1][0]);
+
+
+if(c1!="a" && c1!="b" && c1!="c" && c1!="d" && c1!="e" && c1!="f" && c1!="g" && c1!="h"){
+  state[2]=false;
+  return state;
+}
+
+if(c2!="a" && c2!="b" && c2!="c" && c2!="d" && c2!="e" && c2!="f" && c1!="g" && c1!="h"){
+  state[2]=false;
+  return state;
+}
+
+switch (c1) {
+  case "a":
+    c1=0;
+    break;
+  case "b":
+    c1=1;
+    break;
+  case "c":
+    c1=2;
+    break;
+  case "d":
+    c1=3;
+    break;
+  case "e":
+    c1=4;
+    break;
+  case "f":
+    c1=5;
+    break;
+  case "g":
+    c1=6;
+    break;
+  case "h":
+    c1=7
+    break;
+}  
+
+switch (c2) {
+  case "a":
+    c2=0;
+    break;
+  case "b":
+    c2=1;
+    break;
+  case "c":
+    c2=2;
+    break;
+  case "d":
+    c2=3;
+    break;
+  case "e":
+    c2=4;
+    break;
+  case "f":
+    c2=5;
+    break;
+  case "g":
+    c2=6;
+    break;
+  case "h":
+    c2=7
+    break;
+}  
 
 if(state[0][r1][c1]==""){
   state[2]=false;
@@ -599,24 +677,6 @@ if(state[1]){
 }
 
 
-}
-async inputreader(){
-    const cells = Array.from(document.querySelectorAll('.cell'));
-    const from = await this.waitForEvent(cells, 'click');
-    const to = await this.waitForEvent(cells, 'click');
-    console.log(`cell from ${from.id} clicked!`);
-    console.log(`cell to ${to.id} clicked!`);
-    return [from.id,to.id];
-}
-waitForEvent(elements, eventName) {
-    const promises = elements.map(element => {
-        return new Promise(resolve => {
-          element.addEventListener(eventName, () => {
-            resolve(element);
-          }, { once: true });
-        });
-      });
-      return Promise.race(promises);
 }
 
 }

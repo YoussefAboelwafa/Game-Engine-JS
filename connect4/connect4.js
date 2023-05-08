@@ -2,9 +2,12 @@ import {GameEngine} from '../GameEngine.js';
 export class Connect4 extends GameEngine{
 constructor() {
     super()
-  }  
+}  
+
 controller(input,state){
-  if(input=="" || input > 6 || input<0){
+  console.log(input);
+
+  if(input > 6 || input<0 || input==""){
     state[2]=false
     return state;
   }
@@ -41,7 +44,7 @@ drawer(state) {
         id++;
       }
     }
-  }
+}
 initialize(){
     const grid=[
       ["white", "white", "white", "white", "white", "white", "white"],
@@ -54,25 +57,7 @@ initialize(){
     const currentPlayer=true;
     const currentmove=true;
     return [grid,currentPlayer,currentmove];
-  }
-async inputreader(){
-  await this.waitForButton('enterbutton');
-  const input = document.getElementById("input").value;
-  document.getElementById("input").value = "";
-  return input; 
-
 }
-
-waitForButton(buttonId) {
-    return new Promise(resolve => {
-      const button = document.getElementById(buttonId);
-      const listener = () => {
-        button.removeEventListener('click', listener);
-        resolve();
-      };
-      button.addEventListener('click', listener);
-    });
-  }
 
 
 
