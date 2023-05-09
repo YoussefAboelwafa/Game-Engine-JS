@@ -1,18 +1,15 @@
 import {GameEngine} from '../GameEngine.js';
-
 export class Checkers extends GameEngine{
     // 🔴->2
     // 🔵->1
-    constructor()
-    {
-        super();
-    }
+constructor(){
+    super();
+}
     
-    initialize(){
+initialize(){
         const turn = 1;
-        const piece =[0,0];
-        const canchoose = true;
-        const istouched = false;
+        const jumps = [];
+        const valid = true;
         const board=Array(8).fill().map(() => Array(8).fill(0));
         board [0] = [0,2,0,2,0,2,0,2];
         board [1] = [2,0,2,0,2,0,2,0];
@@ -20,37 +17,9 @@ export class Checkers extends GameEngine{
         board [5] = [1,0,1,0,1,0,1,0];
         board [6] = [0,1,0,1,0,1,0,1];
         board [7] = [1,0,1,0,1,0,1,0];
-        const id = [
-            ["0", "1", "2", "3", "4", "5", "6", "7"],
-            ["8","9", "10", "11", "12", "13", "14", "15"],
-            ["16","17","18", "19", "20", "21", "22", "23"],
-            ["24","25","26","27", "28", "29", "30", "31"],
-            ["32", "33", "34", "35", "36", "37", "38", "39"],
-            ["40","41", "42", "43", "44", "45", "46", "47"],
-            ["48", "49", "50", "51", "52", "53", "54", "55"],
-            ["56","57","58","59","60","61","62","63"]
-        ]
-        return[board,id,true,turn,piece,canchoose,istouched]
-    }
-
-    async inputreader(){
-        const cells = Array.from(document.querySelectorAll('.cell'));
-        const selectedcell = await this.waitForEvent(cells, 'click');
-        console.log(`cell ${selectedcell.id} clicked!`);
-      return [parseInt(selectedcell.id[0]),parseInt(selectedcell.id[1])];
-      } 
-    waitForEvent(elements, eventName) {
-      const promises = elements.map(element => {
-          return new Promise(resolve => {
-            element.addEventListener(eventName, () => {
-              resolve(element);
-            }, { once: true });
-          });
-        });
-        return Promise.race(promises);
-      }
-      
-    drawer(state)
+        return [board,jumps,valid,turn]
+} 
+drawer(state)
     {
         for(let i=0;i<8;i++)
         {
@@ -71,251 +40,180 @@ export class Checkers extends GameEngine{
                     else if (state[0][i][j] == 4){
                         elem.textContent = '🔶'
                     }
+                    else if (state[0][i][j] == 6){
+                        elem.textContent = '🟨'
+                    }
+                }
+                else{
+                    const elem=document.getElementById(i.toString()+j.toString());
+                    elem.textContent = '';
                 }
             }
         }
+}
+controller(input,state){  
+    const inputArray=input.split("-");
+    if(inputArray.length!=2 || inputArray[0]=="" || inputArray[1]=="" || inputArray[0].length!=2 || inputArray[1].length!=2){
+        state[2]=false;
+        return state;
     }
 
+    let [x1,y1]= [parseInt(inputArray[0][0]),parseInt(inputArray[0][1])];
+    let [x2,y2]= [parseInt(inputArray[1][0]),parseInt(inputArray[1][1])];
 
-    controller(position,state)
-    {
+    if(x1<0 || x1>7 ||x2<0 || x2>7){
+    state[2]=false;
+    return state;
+    }           
+      
+    console.log([x1,y1,x2,y2]);
 
-        console.log(position);
-        // [board,id,true,turn,piece,canchoose,istouched]
-        let c = position[0];
-        let r = position[1];
         let board = state[0];
-        let id = state[1];
-        let turn = state[3];
-        let piece = state[4];
-        let canchoose = state[5];
-        let istouched = state[6];
-
-        async function jump(jump,id,board) {
-            let jumps = [];
-            console.log(new Array(board));
-            if (board[jump[0]][jump[1]] === 1 && jump[2] !== 0) {
-                board[jump[2]][jump[3]] = 1;
-            }
-            else if (board[jump[0]][jump[1]] === 2 && jump[2] !== 7){
-                board[jump[2]][jump[3]] = 2;
-            }
-            else if (board[jump[0]][jump[1]] === 3 || (board[jump[0]][jump[1]] === 1 && jump[2] === 0)){
-                board[jump[2]][jump[3]] = 3;
-            }
-            else if (board[jump[0]][jump[1]] === 4 || (board[jump[0]][jump[1]] === 2 && jump[2] === 7)){
-                board[jump[2]][jump[3]] = 4;
-            }
-            board[jump[0]][jump[1]] = 0;
-            board[ (jump[0] + jump[2])/2 ][ (jump[1] + jump[3])/2] = 0;
-            console.log(new Array(board));
-            let c = jump[2];
-            let r = jump[3];
-            if (c > 1 && board[c][r] === 1){
-                if ( r > 1 && board[c-1][r-1]%2 === 0 && board[c-2][r-2] === 0 && board[c-1][r-1] !== 0){
-                    jumps.push([c,r,c-2,r-2]);
-                }
-                else if (r < 6 && board[c-1][r+1]%2 === 0 && board[c-2][r+2] === 0 && board[c-1][r+1] !== 0){
-                    jumps.push([c,r,c-2,r+2]);
-                }
-            }
-            else if (c < 6 && board[c][r] === 2){
-                if ( r > 1 && board[c+1][r-1]%2 === 1 && board[c+2][r-2] === 0 && board[c-1][r-1] !== 0){
-                    jumps.push([c,r,c+2,r-2]);
-                }
-                else if (r < 6 && board[c+1][r+1]%2 === 1 && board[c+2][r+2] === 0 && board[c-1][r+1] !== 0){
-                    jumps.push([c,r,c+2,r+2]);
-                }
-            }
-            else {
-                if (c > 1 && r > 1 && board[c-1][r-1]%2 !== board[c][r]%2 && board[c-2][r-2] === 0 && board[c-1][r-1] !== 0){
-                    jumps.push([c,r,c-2,r-2]);
-                }
-                else if (c > 1 && r < 6 && board[c-1][r+1]%2 !== board[c][r]%2 && board[c-2][r+2] === 0 && board[c-1][r+1] !== 0){
-                    jumps.push([c,r,c-2,r+2]);
-                }
-                else if (c < 6 && r > 1 && board[c+1][r-1]%2 !== board[c][r]%2 && board[c+2][r-2] === 0 && board[c+1][r-1] !== 0){
-                    jumps.push([c,r,c+2,r-2]);
-                }
-                else if (c < 6 && r < 6 && board[c+1][r+1]%2 !== board[c][r]%2 && board[c+2][r+2] === 0 && board[c+1][r+1] !== 0){
-                    jumps.push([c,r,c+2,r+2]);
-                }
-
-            }
-            if (jumps.length >0){
-                await choosejumber(jumps,id,board);
-            }
+        let jumps = state[1];
+        let t = state[3];
+        let isvalid = true;
+        if(x1 < 0 || x1 > 7 || x2 < 0 || x2 > 7 || y1 < 0 || y1 > 7 || y2 < 0 || y2 > 7){
+            isvalid = false;
         }
-
-        async function choosejumber(jumps,ids,board) {
-            let divs = [];
-            let waitForPressResolve,po;
-            function waitForPress() {
-                return new Promise(resolve => waitForPressResolve = resolve);
-            }
-            function choice(c) {
-                if (waitForPressResolve) waitForPressResolve();
-                po =  c;
-            }
-            for (let i=0;i<jumps.length;i++){
-                let div = document.createElement("div");
-                div.style.width = "42px";
-                div.style.height = "42px";
-                div.style.background = "yellow";
-                div.setAttribute("id",'c' + i.toString());
-                div.addEventListener('click',function () {
-                    choice(div.id);
-                });
-                if (!document.getElementById([jumps[i][2]].toString()+[jumps[i][3]].toString()).hasChildNodes()) {
-                    document.getElementById([jumps[i][2]].toString()+[jumps[i][3]].toString()).appendChild(div);
-                }
-                divs.push(div);
-            }
-            await waitForPress();
-            for (let i = 0; i < divs.length; i++) {
-                if(document.getElementById(divs[i].id) !== null) {
-                    document.getElementById(divs[i].id).remove();
-                }
-            }
-            po = parseInt( po.slice(1));
-            await jump(jumps[po] ,ids ,board)
-        }
-
-        async function check(board ,id ,ele) {
-            ++ele;
-            console.log("ele",ele%2);
-            let NumOfjumbs = 0;
-            let jumbs = [];
-            for (let c = 1; c < board.length-1; c++) {
-                for (let r = 1; r <board.length-1 ; r++) {
-                    if (board[c][r]%2 === ele%2 && board[c][r] !==0) {
-                        if (board[c + 1][r + 1] === 0 && board[c - 1][r - 1] !== 0 && board[c][r] % 2 !== board[c - 1][r - 1] % 2) {
-                            if (board[c - 1][r - 1] !== 1) {
-                                ++NumOfjumbs;
-                                jumbs.push([c - 1, r - 1, c + 1, r + 1]);
+        if(jumps.length > 0 && isvalid){
+            isvalid = false;
+            for (var i = 0; i < jumps.length; i++){
+                if(JSON.stringify(jumps[i]) === JSON.stringify([x1,y1,x2,y2])){
+                    isvalid = true;
+                    board[x2][y2] = board[x1][y1];
+                    board[x1][y1] = 0;
+                    board[(x1+x2)/2][((y1+y2)/2)] = 0;
+                    if (board[x2][y2] === 1 && x2 === 0) {
+                        board[x2][y2] = 3;
+                    }
+                    else if (board[x2][y2] === 2 && x2 === 7) {
+                        board[x2][y2] = 4;
+                    }
+                    jumps = [];
+                    for (let i = 0; i < board.length; i++) {
+                        for (let j = 0; j < board.length; j++) {
+                            if (board[i][j] === 6) {
+                                board[i][j] = 0;
                             }
+                            
                         }
-                        if (board[c + 1][r - 1] === 0 && board[c - 1][r + 1] !== 0 && board[c][r] % 2 !== board[c - 1][r + 1] % 2) {
-                            if (board[c - 1][r + 1] !== 1) {
-                                ++NumOfjumbs;
-                                jumbs.push([c - 1, r + 1, c + 1, r - 1]);
-                            }
-                        }
-                        if (board[c + 1][r + 1] !== 0 && board[c - 1][r - 1] === 0 && board[c][r] % 2 !== board[c + 1][r + 1] % 2) {
-                            if (board[c + 1][r + 1] !== 2) {
-                                ++NumOfjumbs;
-                                jumbs.push([c + 1, r + 1, c - 1, r - 1]);
-                            }
-                        }
-                        if (board[c + 1][r - 1] !== 0 && board[c - 1][r + 1] === 0 && board[c][r] % 2 !== board[c + 1][r - 1] % 2) {
-                            if(board[c + 1][r - 1] !== 2) {
-                                ++NumOfjumbs;
-                                jumbs.push([c + 1, r - 1, c - 1, r + 1]);
-                            }
-                        }
+                        
                     }
+                    break;
                 }
             }
-            if (NumOfjumbs > 0) {
-                console.log(jumbs);
-                await choosejumber(jumbs, id, board);
-                return true;
-            }
-            return false;
-        }
-
-        if (canchoose && istouched && board[c][r] === 0){
-            canchoose = false;
-            if ( board[piece[0]][piece[1]] === 1 ){
-                if(piece[0]-1 === c && (piece[1]-1 === r || piece[1]+1 === r)){
-                    if (board[c][r] === 0){
-                        let p = 1;
-                        if (c === 0){
-                            p = p + 2;
-                        }
-                        board[piece[0]][piece[1]] = 0;
-                        board[c][r] = p ;
-                        turn = 2;
-                        console.log(canchoose);
+            if (isvalid){
+                if (x2 > 1 && board[x2][y2] === 1) {
+                    if (y2 > 1 && board[x2 - 1][y2 - 1] % 2 === 0 && board[x2 - 2][y2 - 2] === 0 && board[x2 - 1][y2 - 1] !== 0) {
+                        jumps.push([x2,y2,x2-2,y2-2]);
+                        board[x2-2][y2-2] = 6;
                     }
-                    else if (board[c][r] === 2 || board[c][r] === 4){
-
+                    else if (y2 < 6 && board[x2 - 1][y2 + 1] % 2 === 0 && board[x2 - 2][y2 + 2] === 0 && board[x2 - 1][y2 + 1] !== 0) {
+                        jumps.push([x2,y2,x2-2,y2+2]);
+                        board[x2-2][y2+2] = 6;
                     }
                 }
-            }
-            else if(board[piece[0]][piece[1]] === 2){
-                if(piece[0]+1 === c && (piece[1]-1 === r || piece[1]+1 === r)){
-                    if (board[c][r] === 0){
-                        let p = 2;
-                        if (c === 7){
-                            p = p + 2;
-                        }
-                        board[piece[0]][piece[1]] = 0;
-                        board[c][r] = p ;
-                        turn = 1;
-                        console.log(this.canchoose);
+                else if (x2 < 6 && board[x2][y2] === 2) {
+                    if (y2 > 1 && board[x2 + 1][y2 - 1] % 2 === 1 && board[x2 + 2][y2 - 2] === 0 && board[x2 + 1][y2 - 1] !== 0) {
+                        jumps.push([x2,y2,x2+2,y2-2]);
+                        board[x2+2][y2-2] = 6;
                     }
-
-                }
-            }
-            else if(board[piece[0]][piece[1]] === 3 || board[piece[0]][piece[1]] === 4){
-                if ((piece[0]+1 === c || piece[0]-1 === c )&& (piece[1]-1 === r || piece[1]+1 === r)){
-                    if (board[c][r] === 0){
-                        let p = board[piece[0]][piece[1]] ;
-                        board[piece[0]][piece[1]] = 0;
-                        board[c][r] = p ;
-                        console.log(this.canchoose);
+                    else if (y2 < 6 && board[x2 + 1][y2 + 1] % 2 === 1 && board[x2 + 2][y2 + 2] === 0 && board[x2 + 1][y2 + 1] !== 0) {
+                        jumps.push([x2,y2,x2+2,y2+2]);
+                        board[x2+2][y2+2] = 6;
                     }
                 }
-            }
-            console.log("col:" + c + " row:" + r);
-            istouched = false;
-            canchoose = true;
-            state[2] = true;
-            state[3] = turn ;
-            state[4] = piece;
-            state[5] = canchoose;
-            state[6] = istouched;
-
-        }
-        else if (canchoose && board[c][r] !== 0){
-            if(! check(board,id,turn)) {
-                piece[0] = c;
-                piece[1] = r;
-                if (turn == 1 && board[c][r] % 2 === 1) {
-                    istouched = true;
-                    console.log("blue");
-                } else if (turn == 2 && board[c][r] % 2 === 0) {
-                    istouched = true;
-                    console.log("red");
+                else if (board[x2][y2] === 3 || board[x2][y2] === 4) {
+                    if (x2 > 1 && y2 > 1 && board[x2 - 1][y2 - 1] % 2 !== board[x2][y2] % 2 && board[x2 - 2][y2 - 2] === 0 && board[x2 - 1][y2 - 1] !== 0) {
+                        jumps.push([x2,y2,x2-2,y2-2]);
+                        board[x2-2][y2-2] = 6;
+                    }
+                    else if (x2 > 1 && y2 < 6 && board[x2 - 1][y2 + 1] % 2 !== board[x2][y2] % 2 && board[x2 - 2][y2 + 2] === 0 && board[x2 - 1][y2 + 1] !== 0) {
+                        jumps.push([x2,y2,x2-2,y2+2]);
+                        board[x2-2][y2+2] = 6;
+                    }
+                    else if (x2 < 6 && y2 > 1 && board[x2 + 1][y2 - 1] % 2 !== board[x2][y2] % 2 && board[x2 + 2][y2 - 2] === 0 && board[x2 + 1][y2 - 1] !== 0) {
+                        jumps.push([x2,y2,x2+2,y2-2]);
+                        board[x2+2][y2-2] = 6;
+                    }
+                    else if (x2 < 6 && y2 < 6 && board[x2 + 1][y2 + 1] % 2 !== board[x2][y2] % 2 && board[x2 + 2][y2 + 2] === 0 && board[x2 + 1][y2 + 1] !== 0) {
+                        jumps.push([x2,y2,x2+2,y2+2]);
+                        board[x2+2][y2+2] = 6;
+                    }
                 }
-            }
-            else{
-                if (turn === 1){
-                    turn = 2;
+                if(jumps.length > 0){
                 }
                 else {
-                    turn = 1;
+                    t = (t + 1) % 2;
                 }
-
             }
-            state[2] = true;
-            state[3] = turn ;
-            state[4] = piece;
-            state[5] = canchoose;
-            state[6] = istouched;
         }
+        else if (x1 === x2 + 1 && (y1 === y2 + 1 || y1 === y2 - 1) && (board[x1][y1] !== 2 && board[x1][y1] !== 0) && board[x2][y2] === 0) {
+            if (board[x1][y1] % 2 === t) {
+                board[x2][y2] = board[x1][y1];
+                board[x1][y1] = 0;
+                t = (t + 1) % 2;
+                if (board[x2][y2] === 1 && x2 === 0) {
+                    board[x2][y2] = 3;
+                }
+            } 
+            else {
+                isvalid = false;
+            }
+        } 
+        else if (x1 === x2 - 1 && (y1 === y2 + 1 || y1 === y2 - 1) && (board[x1][y1] !== 1 && board[x1][y1] !== 0) && board[x2][y2] === 0) {
+            if (board[x1][y1] % 2 === t) {
+                board[x2][y2] = board[x1][y1];
+                board[x1][y1] = 0;
+                t = (t + 1) % 2;
+                if (board[x2][y2] === 2 && x2 === 7) {
+                    board[x2][y2] = 4;
+                }
+            } 
+            else {
+                isvalid = false;
+            }
+        } 
         else {
-            state[2] = false;
-            state[3] = turn ;
-            state[4] = piece;
-            state[5] = canchoose;
-            state[6] = istouched;
+            isvalid = false;
         }
-        console.log("state is");
-        console.log(state);
+        if (isvalid && jumps.length === 0) {
+            for (let i = 1; i < 7; i++) {
+                for (let j = 1; j < 7; j++) {
+                    if (board[i][j] % 2 === (t + 1) % 2 && board[i][j] !== 0) {
+                        if (board[i + 1][j + 1] === 0 && board[i - 1][j - 1] !== 0 && (board[i][j]) % 2 !== (board[i - 1][j - 1]) % 2) {
+                            if (board[i - 1][j - 1] !== 1) {
+                                jumps.push([i - 1, j - 1, i + 1, j + 1]);
+                            }
+                        }
+                        if (board[i + 1][j - 1] === 0 && board[i - 1][j + 1] !== 0 && (board[i][j]) % 2 !== (board[i - 1][j + 1]) % 2) {
+                            if (board[i - 1][j + 1] !== 1) {
+                                jumps.push([i - 1, j + 1, i + 1, j - 1]);
+                            }
+                        }
+                        if (board[i + 1][j + 1] !== 0 && board[i - 1][j - 1] === 0 && (board[i][j]) % 2 !== (board[i + 1][j + 1]) % 2) {
+                            if (board[i + 1][j + 1] !== 2) {
+                                jumps.push([i + 1, j + 1, i - 1, j - 1]);
+                            }
+                        }
+                        if (board[i + 1][j - 1] !== 0 && board[i - 1][j + 1] === 0 && (board[i][j]) % 2 !== (board[i + 1][j - 1]) % 2) {
+                            if (board[i + 1][j - 1] !== 2) {
+                                jumps.push([i + 1, j - 1, i - 1, j + 1]);
+                            }
+                        }
+                    }
+                }
+            }
+            for (let i=0;i<jumps.length;i++){
+                board[jumps[i][2]][jumps[i][3]] = 6
+            }
+        }
+        state[0] = board;
+        state[1] = jumps;
+        state[2] = isvalid;
+        state[3] = t;
         return state;
 
-    }
+}
 
 }
